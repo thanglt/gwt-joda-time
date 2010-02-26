@@ -106,7 +106,6 @@ public final class ConverterManager {
         iInstantConverters = new ConverterSet(new Converter[] {
             ReadableInstantConverter.INSTANCE,
             StringConverter.INSTANCE,
-            CalendarConverter.INSTANCE,
             DateConverter.INSTANCE,
             LongConverter.INSTANCE,
             NullConverter.INSTANCE,
@@ -116,7 +115,6 @@ public final class ConverterManager {
             ReadablePartialConverter.INSTANCE,
             ReadableInstantConverter.INSTANCE,
             StringConverter.INSTANCE,
-            CalendarConverter.INSTANCE,
             DateConverter.INSTANCE,
             LongConverter.INSTANCE,
             NullConverter.INSTANCE,
