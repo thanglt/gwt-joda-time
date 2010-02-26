@@ -5,6 +5,8 @@
       
 	  <!-- Specify the app entry point class.                         -->
 	  <!-- <entry-point class='org.gwtjoda.client.GwtJoda'/> -->
+
+      <inherits name='org.gwtjoda.emul.Emulation'/>
 	  
 	  <source path="time" />
 </module>

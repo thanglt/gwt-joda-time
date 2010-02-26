@@ -15,11 +15,13 @@
  */
 package org.gwtjoda.time.chrono;
 
-import java.text.DateFormatSymbols;
+import com.google.gwt.core.client.GWT;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TreeMap;
-import java.util.WeakHashMap;
 
+import org.gwtjoda.calendar.CalendarConstants;
 import org.gwtjoda.time.DateTimeFieldType;
 import org.gwtjoda.time.IllegalFieldValueException;
 
@@ -34,7 +36,7 @@ class GJLocaleSymbols {
 
     private static final GJLocaleSymbols[] cFastCache = new GJLocaleSymbols[FAST_CACHE_SIZE];
 
-    private static WeakHashMap cCache = new WeakHashMap();
+    private static Map<Locale, GJLocaleSymbols> cCache = new HashMap<Locale, GJLocaleSymbols>();
 
     public static GJLocaleSymbols forLocale(Locale locale) {
         if (locale == null) {
@@ -72,7 +74,7 @@ class GJLocaleSymbols {
         return a;
     }
 
-    private static void addSymbols(TreeMap map, String[] symbols, Integer[] integers) {
+    private static void addSymbols(TreeMap<String, Integer> map, String[] symbols, Integer[] integers) {
         for (int i=symbols.length; --i>=0; ) {
             String symbol = symbols[i];
             if (symbol != null) {
@@ -81,7 +83,7 @@ class GJLocaleSymbols {
         }
     }
 
-    private static void addNumerals(TreeMap map, int start, int end, Integer[] integers) {
+    private static void addNumerals(TreeMap<String, Integer> map, int start, int end, Integer[] integers) {
         for (int i=start; i<=end; i++) {
             map.put(String.valueOf(i).intern(), integers[i]);
         }
@@ -111,9 +113,9 @@ class GJLocaleSymbols {
     private final String[] iHalfday;
 
     // These map Strings to Integers.
-    private final TreeMap iParseEras;
-    private final TreeMap iParseDaysOfWeek;
-    private final TreeMap iParseMonths;
+    private final TreeMap<String, Integer> iParseEras;
+    private final TreeMap<String, Integer> iParseDaysOfWeek;
+    private final TreeMap<String, Integer> iParseMonths;
 
     private final int iMaxEraLength;
     private final int iMaxDayOfWeekLength;
@@ -127,22 +129,39 @@ class GJLocaleSymbols {
      */
     private GJLocaleSymbols(Locale locale) {
         iLocale = locale;
-
-        DateFormatSymbols dfs = new DateFormatSymbols(locale);
-
-        iEras = dfs.getEras();
-        iDaysOfWeek = realignDaysOfWeek(dfs.getWeekdays());
-        iShortDaysOfWeek = realignDaysOfWeek(dfs.getShortWeekdays());
-        iMonths = realignMonths(dfs.getMonths());
-        iShortMonths = realignMonths(dfs.getShortMonths());
-        iHalfday = dfs.getAmPmStrings();
+        CalendarConstants calcon = (CalendarConstants) GWT.create(CalendarConstants.class);
+        
+        //TODO i18n this
+        iEras = new String[]{"BCE", "CE"};
+        iDaysOfWeek = realignDaysOfWeek(
+                new String[]{ calcon.sunday(), calcon.monday(), calcon.tuesday(), 
+                calcon.wednesday(), calcon.thursday(), calcon.friday(),
+                calcon.saturday()}
+                );
+        iShortDaysOfWeek = realignDaysOfWeek(
+                new String[]{ calcon.sunday_short(), calcon.monday_short(), calcon.tuesday_short(),
+                calcon.wednesday_short(), calcon.thursday_short(), calcon.friday_short(), 
+                calcon.saturday_short() }
+                );
+        iMonths = realignMonths( new String[]{
+            calcon.january(), calcon.february(), calcon.march(), calcon.april(),
+            calcon.may(), calcon.june(), calcon.july(), calcon.august(), calcon.september(),
+            calcon.october(), calcon.november(), calcon.december()
+        });
+        iShortMonths = realignMonths(new String[]{
+            calcon.january_short(), calcon.february_short(), calcon.march_short(), calcon.april_short(),
+            calcon.may_short(), calcon.june_short(), calcon.july_short(), calcon.august_short(), 
+            calcon.september_short(),
+            calcon.october_short(), calcon.november_short(), calcon.december_short()
+        });
+        iHalfday = new String[]{ "AM", "PM"};
 
         Integer[] integers = new Integer[13];
         for (int i=0; i<13; i++) {
             integers[i] = new Integer(i);
         }
 
-        iParseEras = new TreeMap(String.CASE_INSENSITIVE_ORDER);
+        iParseEras = new TreeMap<String, Integer>(String.CASE_INSENSITIVE_ORDER);
         addSymbols(iParseEras, iEras, integers);
         if ("en".equals(locale.getLanguage())) {
             // Include support for parsing "BCE" and "CE" if the language is
@@ -152,12 +171,12 @@ class GJLocaleSymbols {
             iParseEras.put("CE", integers[1]);
         }
 
-        iParseDaysOfWeek = new TreeMap(String.CASE_INSENSITIVE_ORDER);
+        iParseDaysOfWeek = new TreeMap<String, Integer>(String.CASE_INSENSITIVE_ORDER);
         addSymbols(iParseDaysOfWeek, iDaysOfWeek, integers);
         addSymbols(iParseDaysOfWeek, iShortDaysOfWeek, integers);
         addNumerals(iParseDaysOfWeek, 1, 7, integers);
 
-        iParseMonths = new TreeMap(String.CASE_INSENSITIVE_ORDER);
+        iParseMonths = new TreeMap<String, Integer>(String.CASE_INSENSITIVE_ORDER);
         addSymbols(iParseMonths, iMonths, integers);
         addSymbols(iParseMonths, iShortMonths, integers);
         addNumerals(iParseMonths, 1, 12, integers);
