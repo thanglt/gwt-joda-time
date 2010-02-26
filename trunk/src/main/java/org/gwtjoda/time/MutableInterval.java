@@ -389,11 +389,7 @@ public class MutableInterval
      * @return a clone of this object.
      */
     public Object clone() {
-        try {
-            return super.clone();
-        } catch (CloneNotSupportedException ex) {
-            throw new InternalError("Clone error");
-        }
+        throw new Error("Clone error");
     }
 
 }
