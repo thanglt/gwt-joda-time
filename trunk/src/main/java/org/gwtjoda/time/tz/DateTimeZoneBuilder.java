@@ -22,12 +22,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Set;
 
 import org.gwtjoda.time.Chronology;
@@ -36,6 +34,7 @@ import org.gwtjoda.time.DateTimeUtils;
 import org.gwtjoda.time.DateTimeZone;
 import org.gwtjoda.time.Period;
 import org.gwtjoda.time.PeriodType;
+import org.gwtjoda.time.calendar.TimeZoneList;
 import org.gwtjoda.time.chrono.ISOChronology;
 
 /**
@@ -1415,7 +1414,7 @@ public class DateTimeZoneBuilder {
             // Some timezones (Australia) have the same name key for
             // summer and winter which messes everything up. Fix it here.
             String[] zoneNameData = new String[5];
-            String[][] zoneStrings = new DateFormatSymbols(Locale.ENGLISH).getZoneStrings();
+            String[][] zoneStrings = TimeZoneList.getTimeZones();
             for (int j = 0; j < zoneStrings.length; j++) {
                 String[] set = zoneStrings[j];
                 if (set != null && set.length == 5 && id.equals(set[0])) {
