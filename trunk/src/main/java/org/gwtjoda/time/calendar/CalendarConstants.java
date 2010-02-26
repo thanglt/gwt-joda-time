@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.gwtjoda.calendar;
+package org.gwtjoda.time.calendar;
 
 import com.google.gwt.i18n.client.Constants;
 
