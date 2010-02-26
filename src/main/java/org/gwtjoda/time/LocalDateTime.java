@@ -16,7 +16,6 @@
 package org.gwtjoda.time;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -91,39 +90,6 @@ public final class LocalDateTime
     private Chronology iChronology;
 
     //-----------------------------------------------------------------------
-    /**
-     * Constructs a LocalDateTime from a <code>java.util.Calendar</code>
-     * using exactly the same field values avoiding any time zone effects.
-     * <p>
-     * Each field is queried from the Calendar and assigned to the LocalDateTime.
-     * This is useful if you have been using the Calendar as a local date,
-     * ignoing the zone.
-     * <p>
-     * This factory method ignores the type of the calendar and always
-     * creates a LocalDateTime with ISO chronology. It is expected that you
-     * will only pass in instances of <code>GregorianCalendar</code> however
-     * this is not validated.
-     *
-     * @param calendar  the Calendar to extract fields from
-     * @return the created LocalDateTime
-     * @throws IllegalArgumentException if the calendar is null
-     * @throws IllegalArgumentException if the date is invalid for the ISO chronology
-     */
-    public static LocalDateTime fromCalendarFields(Calendar calendar) {
-        if (calendar == null) {
-            throw new IllegalArgumentException("The calendar must not be null");
-        }
-        return new LocalDateTime(
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH) + 1,
-            calendar.get(Calendar.DAY_OF_MONTH),
-            calendar.get(Calendar.HOUR_OF_DAY),
-            calendar.get(Calendar.MINUTE),
-            calendar.get(Calendar.SECOND),
-            calendar.get(Calendar.MILLISECOND)
-        );
-    }
-
     /**
      * Constructs a LocalDateTime from a <code>java.util.Date</code>
      * using exactly the same field values avoiding any time zone effects.
