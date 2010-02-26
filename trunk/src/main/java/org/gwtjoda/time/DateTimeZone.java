@@ -36,7 +36,6 @@ import org.gwtjoda.time.tz.FixedDateTimeZone;
 import org.gwtjoda.time.tz.NameProvider;
 import org.gwtjoda.time.tz.Provider;
 import org.gwtjoda.time.tz.UTCProvider;
-import org.gwtjoda.time.tz.ZoneInfoProvider;
 
 /**
  * DateTimeZone represents a time zone.
@@ -403,33 +402,7 @@ public abstract class DateTimeZone implements Serializable {
      * @return the default name provider
      */
     private static Provider getDefaultProvider() {
-        Provider provider = null;
-
-        String providerClass =
-            System.getProperty("org.gwtjoda.time.DateTimeZone.Provider");
-        if (providerClass != null) {
-            try {
-                provider = (Provider) Class.forName(providerClass).newInstance();
-            } catch (Exception ex) {
-                Thread thread = Thread.currentThread();
-                thread.getThreadGroup().uncaughtException(thread, ex);
-            }
-        }
-
-        if (provider == null) {
-            try {
-                provider = new ZoneInfoProvider("org/joda/time/tz/data");
-            } catch (Exception ex) {
-                Thread thread = Thread.currentThread();
-                thread.getThreadGroup().uncaughtException(thread, ex);
-            }
-        }
-
-        if (provider == null) {
-            provider = new UTCProvider();
-        }
-
-        return provider;
+        return new UTCProvider();
     }
 
     //-----------------------------------------------------------------------
