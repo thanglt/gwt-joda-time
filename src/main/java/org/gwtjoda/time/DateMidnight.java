@@ -786,17 +786,6 @@ public final class DateMidnight
     }
 
     /**
-     * Converts this object to a <code>LocalDate</code> with the
-     * same date and chronology.
-     *
-     * @return a LocalDate with the same date and chronology
-     * @since 1.3
-     */
-    public LocalDate toLocalDate() {
-        return new LocalDate(getMillis(), getChronology());
-    }
-
-    /**
      * Converts this object to an <code>Interval</code> encompassing
      * the whole of this day.
      * <p>

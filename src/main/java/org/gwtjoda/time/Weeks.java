@@ -113,12 +113,6 @@ public final class Weeks extends BaseSingleFieldPeriod {
      * @throws IllegalArgumentException if the partials are null or invalid
      */
     public static Weeks weeksBetween(ReadablePartial start, ReadablePartial end) {
-        if (start instanceof LocalDate && end instanceof LocalDate)   {
-            Chronology chrono = DateTimeUtils.getChronology(start.getChronology());
-            int weeks = chrono.weeks().getDifference(
-                    ((LocalDate) end).getLocalMillis(), ((LocalDate) start).getLocalMillis());
-            return Weeks.weeks(weeks);
-        }
         int amount = BaseSingleFieldPeriod.between(start, end, ZERO);
         return Weeks.weeks(amount);
     }
