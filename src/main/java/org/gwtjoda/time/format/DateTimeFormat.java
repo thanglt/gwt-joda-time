@@ -15,8 +15,6 @@
  */
 package org.gwtjoda.time.format;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -816,22 +814,20 @@ public class DateTimeFormat {
         }
 
         String getPattern(Locale locale) {
-            DateFormat f = null;
+            com.google.gwt.i18n.client.DateTimeFormat f = null;
             switch (iType) {
                 case DATE:
-                    f = DateFormat.getDateInstance(iDateStyle, locale);
+                    f = com.google.gwt.i18n.client.DateTimeFormat.getMediumDateFormat();
                     break;
                 case TIME:
-                    f = DateFormat.getTimeInstance(iTimeStyle, locale);
+                    f = com.google.gwt.i18n.client.DateTimeFormat.getMediumTimeFormat();
                     break;
                 case DATETIME:
-                    f = DateFormat.getDateTimeInstance(iDateStyle, iTimeStyle, locale);
+                    f = com.google.gwt.i18n.client.DateTimeFormat.getMediumDateTimeFormat();
                     break;
             }
-            if (f instanceof SimpleDateFormat == false) {
-                throw new IllegalArgumentException("No datetime pattern for locale: " + locale);
-            }
-            return ((SimpleDateFormat) f).toPattern();
+            
+            return f.getPattern();
         }
     }
 
