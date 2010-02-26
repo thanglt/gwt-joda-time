@@ -636,15 +636,6 @@ public final class LocalDateTime
 
     //-----------------------------------------------------------------------
     /**
-     * Converts this object to a LocalDate with the same date and chronology.
-     *
-     * @return a LocalDate with the same date and chronology
-     */
-    public LocalDate toLocalDate() {
-        return new LocalDate(getLocalMillis(), getChronology());
-    }
-
-    /**
      * Converts this object to a LocalTime with the same time and chronology.
      *
      * @return a LocalTime with the same time and chronology
