@@ -21,7 +21,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.gwtjoda.calendar.CalendarConstants;
+import org.gwtjoda.time.calendar.CalendarConstants;
 import org.gwtjoda.time.DateTimeFieldType;
 import org.gwtjoda.time.IllegalFieldValueException;
 

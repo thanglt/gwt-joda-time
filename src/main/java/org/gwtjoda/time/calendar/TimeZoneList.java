@@ -1,4 +1,4 @@
-package org.gwtjoda.calendar;
+package org.gwtjoda.time.calendar;
 
 import com.google.gwt.core.client.GWT;
 
