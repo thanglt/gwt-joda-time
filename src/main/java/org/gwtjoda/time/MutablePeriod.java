@@ -53,7 +53,7 @@ import org.gwtjoda.time.format.ISOPeriodFormat;
  */
 public class MutablePeriod
         extends BasePeriod
-        implements ReadWritablePeriod, Serializable {
+        implements ReadWritablePeriod, Cloneable, Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = 3436451121567212165L;
@@ -956,5 +956,25 @@ public class MutablePeriod
      */
     public void addMillis(int millis) {
         super.addField(DurationFieldType.millis(), millis);
+    }
+
+    // Misc
+    //-----------------------------------------------------------------------
+    /**
+     * Clone this object without having to cast the returned object.
+     *
+     * @return a clone of the this object.
+     */
+    public MutablePeriod copy() {
+        return (MutablePeriod) clone();
+    }
+
+    /**
+     * Clone this object.
+     *
+     * @return a clone of this object.
+     */
+    public Object clone() {
+            throw new Error("Clone error");
     }
 }
