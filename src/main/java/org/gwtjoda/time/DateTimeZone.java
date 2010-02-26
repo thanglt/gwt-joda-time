@@ -16,8 +16,7 @@
 package org.gwtjoda.time;
 
 import java.io.Serializable;
-import java.lang.ref.Reference;
-import java.lang.ref.SoftReference;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -36,6 +35,8 @@ import org.gwtjoda.time.tz.FixedDateTimeZone;
 import org.gwtjoda.time.tz.NameProvider;
 import org.gwtjoda.time.tz.Provider;
 import org.gwtjoda.time.tz.UTCProvider;
+
+import com.google.gwt.core.client.GWT;
 
 /**
  * DateTimeZone represents a time zone.
@@ -110,13 +111,17 @@ public abstract class DateTimeZone implements Serializable {
         setNameProvider0(null);
 
         try {
-            try {
-                cDefault = forID(System.getProperty("user.timezone"));
-            } catch (RuntimeException ex) {
-                // ignored
-            }
             if (cDefault == null) {
-                cDefault = forTimeZone(TimeZone.getDefault());
+                if (GWT.isClient()) {
+                    cDefault = forTimeZone(
+                            com.google.gwt.i18n.client.DateTimeFormat
+                            .getFormat( "zzz" )
+                            .format(new Date()));
+                }
+                else {
+                    // TODO: Fix me
+                    cDefault = forTimeZone("CST");
+                }
             }
         } catch (IllegalArgumentException ex) {
             // ignored
@@ -264,11 +269,12 @@ public abstract class DateTimeZone implements Serializable {
      * @return the DateTimeZone object for the zone
      * @throws IllegalArgumentException if the zone is not recognised
      */
-    public static DateTimeZone forTimeZone(TimeZone zone) {
+    public static DateTimeZone forTimeZone(String zone) {
         if (zone == null) {
             return getDefault();
         }
-        final String id = zone.getID();
+
+        final String id = zone;
         if (id.equals("UTC")) {
             return DateTimeZone.UTC;
         }
@@ -288,7 +294,7 @@ public abstract class DateTimeZone implements Serializable {
 
         // Support GMT+/-hh:mm formats
         if (convId == null) {
-            convId = zone.getDisplayName();
+            convId = id;
             if (convId.startsWith("GMT+") || convId.startsWith("GMT-")) {
                 convId = convId.substring(3);
                 int offset = parseOffset(convId);
@@ -319,16 +325,12 @@ public abstract class DateTimeZone implements Serializable {
         if (iFixedOffsetCache == null) {
             iFixedOffsetCache = new HashMap();
         }
-        DateTimeZone zone;
-        Reference ref = (Reference) iFixedOffsetCache.get(id);
-        if (ref != null) {
-            zone = (DateTimeZone) ref.get();
-            if (zone != null) {
-                return zone;
-            }
+        DateTimeZone zone = (DateTimeZone) iFixedOffsetCache.get(id);
+        if (zone != null) {
+            return zone;
         }
         zone = new FixedDateTimeZone(id, null, offset, offset);
-        iFixedOffsetCache.put(id, new SoftReference(zone));
+        iFixedOffsetCache.put(id, zone);
         return zone;
     }
 
@@ -453,22 +455,7 @@ public abstract class DateTimeZone implements Serializable {
      * @return the default name provider
      */
     private static NameProvider getDefaultNameProvider() {
-        NameProvider nameProvider = null;
-        String providerClass = System.getProperty("org.gwtjoda.time.DateTimeZone.NameProvider");
-        if (providerClass != null) {
-            try {
-                nameProvider = (NameProvider) Class.forName(providerClass).newInstance();
-            } catch (Exception ex) {
-                Thread thread = Thread.currentThread();
-                thread.getThreadGroup().uncaughtException(thread, ex);
-            }
-        }
-
-        if (nameProvider == null) {
-            nameProvider = new DefaultNameProvider();
-        }
-
-        return nameProvider;
+        return new DefaultNameProvider();
     }
 
     //-----------------------------------------------------------------------
