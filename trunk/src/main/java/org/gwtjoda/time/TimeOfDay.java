@@ -16,7 +16,6 @@
 package org.gwtjoda.time;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -91,36 +90,6 @@ public final class TimeOfDay
     public static final int MILLIS_OF_SECOND = 3;
 
     //-----------------------------------------------------------------------
-    /**
-     * Constructs a TimeOfDay from a <code>java.util.Calendar</code>
-     * using exactly the same field values avoiding any time zone effects.
-     * <p>
-     * Each field is queried from the Calendar and assigned to the TimeOfDay.
-     * This is useful to ensure that the field values are the same in the
-     * created TimeOfDay no matter what the time zone is. For example, if
-     * the Calendar states that the time is 04:29, then the created TimeOfDay
-     * will always have the time 04:29 irrespective of time zone issues.
-     * <p>
-     * This factory method ignores the type of the calendar and always
-     * creates a TimeOfDay with ISO chronology.
-     *
-     * @param calendar  the Calendar to extract fields from
-     * @return the created TimeOfDay
-     * @throws IllegalArgumentException if the calendar is null
-     * @throws IllegalArgumentException if the time is invalid for the ISO chronology
-     * @since 1.2
-     */
-    public static TimeOfDay fromCalendarFields(Calendar calendar) {
-        if (calendar == null) {
-            throw new IllegalArgumentException("The calendar must not be null");
-        }
-        return new TimeOfDay(
-            calendar.get(Calendar.HOUR_OF_DAY),
-            calendar.get(Calendar.MINUTE),
-            calendar.get(Calendar.SECOND),
-            calendar.get(Calendar.MILLISECOND)
-        );
-    }
 
     /**
      * Constructs a TimeOfDay from a <code>java.util.Date</code>
