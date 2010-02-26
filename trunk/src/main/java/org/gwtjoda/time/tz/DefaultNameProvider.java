@@ -15,9 +15,10 @@
  */
 package org.gwtjoda.time.tz;
 
-import java.text.DateFormatSymbols;
 import java.util.HashMap;
 import java.util.Locale;
+
+import org.gwtjoda.time.calendar.TimeZoneList;
 
 
 /**
@@ -59,7 +60,7 @@ public class DefaultNameProvider implements NameProvider {
         HashMap byNameKeyCache = (HashMap)byIdCache.get(id);
         if (byNameKeyCache == null) {
             byIdCache.put(id, byNameKeyCache = createCache());
-            String[][] zoneStrings = new DateFormatSymbols(locale).getZoneStrings();
+            String[][] zoneStrings = TimeZoneList.getTimeZones();
             for (int i=0; i<zoneStrings.length; i++) {
                 String[] set = zoneStrings[i];
                 if (set != null && set.length == 5 && id.equals(set[0])) {
