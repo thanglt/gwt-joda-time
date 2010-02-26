@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.TimeZone;
 
 import org.gwtjoda.time.chrono.BaseChronology;
 import org.gwtjoda.time.chrono.ISOChronology;
@@ -1051,15 +1050,6 @@ public abstract class DateTimeZone implements Serializable {
 
     // Basic methods
     //--------------------------------------------------------------------
-
-    /**
-     * Get the datetime zone as a {@link java.util.TimeZone}.
-     * 
-     * @return the closest matching TimeZone object
-     */
-    public java.util.TimeZone toTimeZone() {
-        return java.util.TimeZone.getTimeZone(iID);
-    }
 
     /**
      * Compare this datetime zone with another.
