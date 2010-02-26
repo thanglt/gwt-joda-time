@@ -253,7 +253,9 @@ class ConverterSet {
                 return converter;
             }
 
-            if (supportedType == null || (type != null && !supportedType.isAssignableFrom(type))) {
+            // TODO: Fix ME
+            //if (supportedType == null || (type != null && !supportedType.isAssignableFrom(type))) {
+            if (supportedType == null || (type != null && supportedType != type)) {
                 // Eliminate the impossible.
                 set = set.remove(i, null);
                 converters = set.iConverters;
@@ -278,7 +280,9 @@ class ConverterSet {
             converter = converters[i];
             Class supportedType = converter.getSupportedType();
             for (int j=length; --j>=0; ) {
-                if (j != i && converters[j].getSupportedType().isAssignableFrom(supportedType)) {
+                // TODO: Fix me
+//                if (j != i && converters[j].getSupportedType().isAssignableFrom(supportedType)) {
+                if (j != i && converters[j].getSupportedType() == supportedType) {
                     // Eliminate supertype.
                     set = set.remove(j, null);
                     converters = set.iConverters;
