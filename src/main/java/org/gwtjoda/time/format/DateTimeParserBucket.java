@@ -25,6 +25,7 @@ import org.gwtjoda.time.DateTimeUtils;
 import org.gwtjoda.time.DateTimeZone;
 import org.gwtjoda.time.DurationField;
 import org.gwtjoda.time.IllegalFieldValueException;
+import org.gwtjoda.time.utils.ArrayUtils;
 
 /**
  * DateTimeParserBucket is an advanced class, intended mainly for parser
@@ -305,7 +306,7 @@ public class DateTimeParserBucket {
         SavedField[] savedFields = iSavedFields;
         int count = iSavedFieldsCount;
         if (iSavedFieldsShared) {
-            iSavedFields = savedFields = (SavedField[])iSavedFields.clone();
+            iSavedFields = savedFields = (SavedField[])ArrayUtils.clone(iSavedFields);
             iSavedFieldsShared = false;
         }
         sort(savedFields, count);

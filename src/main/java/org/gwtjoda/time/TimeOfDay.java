@@ -24,6 +24,7 @@ import org.gwtjoda.time.chrono.ISOChronology;
 import org.gwtjoda.time.field.AbstractPartialFieldProperty;
 import org.gwtjoda.time.field.FieldUtils;
 import org.gwtjoda.time.format.ISODateTimeFormat;
+import org.gwtjoda.time.utils.ArrayUtils;
 
 /**
  * TimeOfDay is an immutable partial supporting the hour, minute, second
@@ -440,7 +441,7 @@ public final class TimeOfDay
      * @return the array of field types (cloned), largest to smallest
      */
     public DateTimeFieldType[] getFieldTypes() {
-        return (DateTimeFieldType[]) FIELD_TYPES.clone();
+        return (DateTimeFieldType[]) ArrayUtils.clone(FIELD_TYPES);
     }
 
     //-----------------------------------------------------------------------

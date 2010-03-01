@@ -24,6 +24,7 @@ import org.gwtjoda.time.chrono.ISOChronology;
 import org.gwtjoda.time.field.AbstractPartialFieldProperty;
 import org.gwtjoda.time.field.FieldUtils;
 import org.gwtjoda.time.format.ISODateTimeFormat;
+import org.gwtjoda.time.utils.ArrayUtils;
 
 /**
  * YearMonthDay is an immutable partial supporting the year, monthOfYear
@@ -327,7 +328,7 @@ public final class YearMonthDay
      * @return the array of field types (cloned), largest to smallest
      */
     public DateTimeFieldType[] getFieldTypes() {
-        return (DateTimeFieldType[]) FIELD_TYPES.clone();
+        return (DateTimeFieldType[]) ArrayUtils.clone(FIELD_TYPES);
     }
 
     //-----------------------------------------------------------------------

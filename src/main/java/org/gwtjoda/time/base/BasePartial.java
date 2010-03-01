@@ -26,6 +26,7 @@ import org.gwtjoda.time.convert.ConverterManager;
 import org.gwtjoda.time.convert.PartialConverter;
 import org.gwtjoda.time.format.DateTimeFormat;
 import org.gwtjoda.time.format.DateTimeFormatter;
+import org.gwtjoda.time.utils.ArrayUtils;
 
 /**
  * BasePartial is an abstract implementation of ReadablePartial that stores
@@ -234,7 +235,7 @@ public abstract class BasePartial
      * @return the current values of each field (cloned), largest to smallest
      */
     public int[] getValues() {
-        return (int[]) iValues.clone();
+        return ArrayUtils.clone(iValues);
     }
 
     /**

@@ -15,6 +15,8 @@
  */
 package org.gwtjoda.time.convert;
 
+import org.gwtjoda.time.utils.ArrayUtils;
+
 /**
  * A set of converters, which allows exact converters to be quickly
  * selected. This class is threadsafe because it is (essentially) immutable.
@@ -76,7 +78,7 @@ class ConverterSet {
         // Do all updates on a copy: slots in iSelectEntries must not be
         // updated by multiple threads as this can allow all null slots to be
         // consumed.
-        entries = (Entry[])entries.clone();
+        entries = (Entry[]) ArrayUtils.clone(entries);
 
         // Add new entry.
         entries[index] = e;
