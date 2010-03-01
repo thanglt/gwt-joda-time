@@ -26,6 +26,7 @@ import org.gwtjoda.time.DurationFieldType;
 import org.gwtjoda.time.PeriodType;
 import org.gwtjoda.time.ReadWritablePeriod;
 import org.gwtjoda.time.ReadablePeriod;
+import org.gwtjoda.time.utils.ArrayUtils;
 
 /**
  * Factory that creates complex instances of PeriodFormatter via method calls.
@@ -119,7 +120,7 @@ public class PeriodFormatterBuilder {
      */
     public PeriodFormatter toFormatter() {
         PeriodFormatter formatter = toFormatter(iElementPairs, iNotPrinter, iNotParser);
-        iFieldFormatters = (FieldFormatter[]) iFieldFormatters.clone();
+        iFieldFormatters = (FieldFormatter[]) ArrayUtils.clone(iFieldFormatters);
         return formatter;
     }
 
